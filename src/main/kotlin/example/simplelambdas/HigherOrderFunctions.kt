@@ -1,4 +1,0 @@
-package example.simplelambdas
-
-
-

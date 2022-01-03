@@ -8,13 +8,25 @@ package generics
 // This is a more defined generic constraint by having a specific type
 // what's the difference between specifying the type in the parameter val waterSupply?
 class Aquarium<out T: WaterSupply>(val waterSupply: T) {
-    fun addWater() {
+    fun addWater(cleaner: Cleaner<T>) {
 //        fun waterSupplyStillNeedsProcessing(): String =  "water supply needs processing first"
 //        check(!waterSupply.needsProcessing, ::waterSupplyStillNeedsProcessing)
         // written using trailing closure syntax
+        if(waterSupply.needsProcessing) {
+            cleaner.clean(waterSupply)
+        }
         check(!waterSupply.needsProcessing) { "water supply needs processing first" }
         println(println("adding water from $waterSupply"))
     }
+}
+
+interface Cleaner<in T: WaterSupply> {
+    fun clean(waterSupply: T)
+}
+
+class TapWaterCleaner: Cleaner<TapWater> {
+    override fun clean(waterSupply: TapWater) = waterSupply.addChemicalCleaners()
+
 }
 
 //If you remove the out keyword, the compiler will give an error when calling addItemTo(),
@@ -68,19 +80,25 @@ fun genericsExample3() {
 }
 */
 
-fun genericsExample4() {
-    val aquarium4 = Aquarium(LakeWater())
-    aquarium4.waterSupply.filter()
-    aquarium4.addWater()
-}
+//fun genericsExample4() {
+//    val aquarium4 = Aquarium(LakeWater())
+//    aquarium4.waterSupply.filter()
+//    aquarium4.addWater()
+//}
 
 fun genericsExample5() {
     val aquarium5 = Aquarium(TapWater())
     addItemTo(aquarium5)
 }
 
+fun genericsExample6() {
+    val cleaner = TapWaterCleaner()
+    val aquarium = Aquarium(TapWater())
+    aquarium.addWater(cleaner)
+}
+
 fun main() {
- genericsExample5()
+ genericsExample6()
 }
 
 

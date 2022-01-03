@@ -6,10 +6,35 @@ package generics
 // Now T is a generic constraint - can't be null
 
 // This is a more defined generic constraint by having a specific type
-// whats the difference between specifying the type in the parameter val waterSupply?
+// what's the difference between specifying the type in the parameter val waterSupply?
 class Aquarium<T: WaterSupply>(val waterSupply: T) {
-
+    fun addWater() {
+//        fun waterSupplyStillNeedsProcessing(): String =  "water supply needs processing first"
+//        check(!waterSupply.needsProcessing, ::waterSupplyStillNeedsProcessing)
+        // written using trailing closure syntax
+        check(!waterSupply.needsProcessing) { "water supply needs processing first" }
+        println(println("adding water from $waterSupply"))
+    }
 }
+
+// open for subclassing
+open class WaterSupply (var needsProcessing: Boolean)
+
+// Subclasses
+class TapWater : WaterSupply(true) {
+    fun addChemicalCleaners() {
+        needsProcessing = false
+    }
+}
+
+class FishStoreWater : WaterSupply(false)
+
+class LakeWater : WaterSupply(true) {
+    fun filter() {
+        needsProcessing = false
+    }
+}
+
 
 fun genericsExample() {
     // here I have used named argument at the call site
@@ -39,26 +64,14 @@ fun genericsExample3() {
 }
 */
 
+fun genericsExample4() {
+    val aquarium4 = Aquarium(LakeWater())
+    aquarium4.waterSupply.filter()
+    aquarium4.addWater()
+}
+
 fun main() {
-
-}
-
-// open for subclassing
-open class WaterSupply (var needsProcessing: Boolean)
-
-// Subclasses
-class TapWater : WaterSupply(true) {
-    fun addChemicalCleaners() {
-        needsProcessing = false
-    }
-}
-
-class FishStoreWater : WaterSupply(false)
-
-class LakeWater : WaterSupply(true) {
-    fun filter() {
-        needsProcessing = false
-    }
+ genericsExample4()
 }
 
 

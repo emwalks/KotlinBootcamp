@@ -1,4 +1,4 @@
-package generics
+package example.generics
 
 // The T here is of type Any? by default
 // class Aquarium<T>(val waterSupply: T)
@@ -32,6 +32,11 @@ class TapWaterCleaner: Cleaner<TapWater> {
 //If you remove the out keyword, the compiler will give an error when calling addItemTo(),
 // because Kotlin can't ensure that you are not doing anything unsafe with the type.
 fun addItemTo(aquarium: Aquarium<WaterSupply>) = println("item added")
+
+// generic function
+fun <T: WaterSupply>  isWaterClean(aquarium: Aquarium<T>) {
+    println("aquarium water is clean: ${!aquarium.waterSupply.needsProcessing}")
+}
 
 // open for subclassing
 open class WaterSupply (var needsProcessing: Boolean)
@@ -97,8 +102,13 @@ fun genericsExample6() {
     aquarium.addWater(cleaner)
 }
 
+fun genericsExample7() {
+    val aquarium7 = Aquarium(TapWater())
+    isWaterClean(aquarium7)
+}
+
 fun main() {
- genericsExample6()
+ genericsExample7()
 }
 
 

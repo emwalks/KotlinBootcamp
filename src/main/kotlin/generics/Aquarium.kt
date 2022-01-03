@@ -1,6 +1,9 @@
 package generics
 
-class Aquarium<T>(val waterSupply: T)
+// The T here is of type Any? by default
+// class Aquarium<T>(val waterSupply: T)
+
+class Aquarium<T: Any>(val waterSupply: T)
 
 fun genericsExample() {
     // here I have used named argument at the call site
@@ -18,7 +21,7 @@ fun genericsExample2() {
 }
 
 fun genericsExample3() {
-    val aquarium3 = Aquarium(null)
+    val aquarium3 = Aquarium(null) // now we get a compilation error
     if (aquarium3.waterSupply == null) {
         println("waterSupply is null")
     }

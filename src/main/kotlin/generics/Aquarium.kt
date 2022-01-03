@@ -7,7 +7,7 @@ package generics
 
 // This is a more defined generic constraint by having a specific type
 // what's the difference between specifying the type in the parameter val waterSupply?
-class Aquarium<T: WaterSupply>(val waterSupply: T) {
+class Aquarium<out T: WaterSupply>(val waterSupply: T) {
     fun addWater() {
 //        fun waterSupplyStillNeedsProcessing(): String =  "water supply needs processing first"
 //        check(!waterSupply.needsProcessing, ::waterSupplyStillNeedsProcessing)
@@ -16,6 +16,10 @@ class Aquarium<T: WaterSupply>(val waterSupply: T) {
         println(println("adding water from $waterSupply"))
     }
 }
+
+//If you remove the out keyword, the compiler will give an error when calling addItemTo(),
+// because Kotlin can't ensure that you are not doing anything unsafe with the type.
+fun addItemTo(aquarium: Aquarium<WaterSupply>) = println("item added")
 
 // open for subclassing
 open class WaterSupply (var needsProcessing: Boolean)
@@ -70,8 +74,13 @@ fun genericsExample4() {
     aquarium4.addWater()
 }
 
+fun genericsExample5() {
+    val aquarium5 = Aquarium(TapWater())
+    addItemTo(aquarium5)
+}
+
 fun main() {
- genericsExample4()
+ genericsExample5()
 }
 
 

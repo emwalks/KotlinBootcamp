@@ -25,7 +25,7 @@ fun fishExamples() {
 //        println(this.capitalize())
 //    }
     myWith(fish.name) {
-        println(this.capitalize()) }
+        println(capitalize()) }
 }
 
 // Inside myWith(), block() is now an extension function of String.

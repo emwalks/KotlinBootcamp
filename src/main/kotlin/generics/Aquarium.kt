@@ -6,7 +6,10 @@ package generics
 // Now T is a generic constraint - can't be null
 
 // This is a more defined generic constraint by having a specific type
-class Aquarium<T: WaterSupply>(val waterSupply: T)
+// whats the difference between specifying the type in the parameter val waterSupply?
+class Aquarium<T: WaterSupply>(val waterSupply: T) {
+
+}
 
 fun genericsExample() {
     // here I have used named argument at the call site
@@ -18,10 +21,14 @@ fun genericsExample() {
     println("water needs processing: ${aquarium.waterSupply.needsProcessing}")
 }
 
+/*
+//now can no longer supply a string to watersupply parameter
 fun genericsExample2() {
     val aquarium2 = Aquarium("string")
     println(aquarium2.waterSupply)
 }
+
+ */
 
 /*
 fun genericsExample3() {

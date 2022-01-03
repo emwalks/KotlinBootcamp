@@ -3,7 +3,10 @@ package generics
 // The T here is of type Any? by default
 // class Aquarium<T>(val waterSupply: T)
 
-class Aquarium<T: Any>(val waterSupply: T)
+// Now T is a generic constraint - can't be null
+
+// This is a more defined generic constraint by having a specific type
+class Aquarium<T: WaterSupply>(val waterSupply: T)
 
 fun genericsExample() {
     // here I have used named argument at the call site
@@ -20,16 +23,17 @@ fun genericsExample2() {
     println(aquarium2.waterSupply)
 }
 
+/*
 fun genericsExample3() {
-    val aquarium3 = Aquarium(null) // now we get a compilation error
+//    val aquarium3 = Aquarium(null) // now we get a compilation error
     if (aquarium3.waterSupply == null) {
         println("waterSupply is null")
     }
-
 }
+*/
 
 fun main() {
-    genericsExample3()
+
 }
 
 // open for subclassing
